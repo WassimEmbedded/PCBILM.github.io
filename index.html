@@ -3,25 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PCB Design Studio | Professional Circuit Solutions</title>
+    <meta name="description" content="Professional PCB Design Services - From prototyping to production-ready solutions">
+    <title>CircuitCraft Pro | PCB Design Solutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #2c3e50;
             --secondary: #3498db;
-            --light: #ecf0f1;
+            --accent: #e74c3c;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --transition: all 0.3s ease;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
         }
 
         body {
             line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
         }
 
+        /* Dark Mode Toggle */
+        .dark-mode {
+            position: fixed;
+            right: 2rem;
+            bottom: 2rem;
+            z-index: 1000;
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* Header & Navigation */
         .header {
             background: var(--primary);
             color: white;
@@ -30,6 +52,7 @@
             width: 100%;
             top: 0;
             z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .nav {
@@ -48,180 +71,337 @@
         .nav a {
             color: white;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: var(--transition);
+            position: relative;
         }
 
-        .nav a:hover {
-            color: var(--secondary);
+        .nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--secondary);
+            transition: var(--transition);
         }
 
+        .nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
         .hero {
-            height: 80vh;
-            background: linear-gradient(rgba(0,0,0,0.5), url('https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?auto=format&fit=crop&w=1920') center/cover;
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.7), url('https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?auto=format&fit=crop&w=1920') center/cover;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             color: white;
             margin-top: 60px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
         }
 
         .hero h1 {
             font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: slideUp 1s ease;
+        }
+
+        /* Features Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 4rem 2rem;
+            background: white;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
             margin-bottom: 1rem;
         }
 
-        .section {
-            padding: 5rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
+        /* Projects Section */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin-top: 2rem;
+            padding: 4rem 2rem;
         }
 
         .project-card {
-            border: 1px solid #ddd;
-            border-radius: 8px;
+            position: relative;
             overflow: hidden;
-            transition: transform 0.3s;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        .project-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .project-card img {
+        .project-image {
             width: 100%;
-            height: 200px;
+            height: 250px;
             object-fit: cover;
+            transition: var(--transition);
         }
 
-        .project-content {
-            padding: 1.5rem;
-        }
-
-        .services {
-            background: var(--light);
-        }
-
-        .service-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .service-item {
-            text-align: center;
+        .project-overlay {
+            position: absolute;
+            bottom: -100%;
+            left: 0;
+            width: 100%;
             padding: 2rem;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            transition: var(--transition);
         }
 
-        footer {
+        .project-card:hover .project-overlay {
+            bottom: 0;
+        }
+
+        /* Testimonials */
+        .testimonials {
             background: var(--primary);
             color: white;
-            padding: 2rem;
-            text-align: center;
+            padding: 4rem 2rem;
         }
 
+        .testimonial-slider {
+            display: grid;
+            grid-auto-flow: column;
+            gap: 2rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding: 2rem 0;
+        }
+
+        .testimonial-card {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            min-width: 300px;
+            scroll-snap-align: start;
+        }
+
+        /* Contact Form */
         .contact-form {
             max-width: 600px;
             margin: 0 auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
         }
 
         input, textarea {
             width: 100%;
-            padding: 0.8rem;
-            margin-bottom: 1rem;
+            padding: 1rem;
             border: 1px solid #ddd;
-            border-radius: 4px;
+            border-radius: 5px;
+            transition: var(--transition);
         }
 
-        button {
-            background: var(--secondary);
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background 0.3s;
+        input:focus, textarea:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52,152,219,0.25);
         }
 
-        button:hover {
-            background: #2980b9;
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode" onclick="toggleDarkMode()">
+        <i class="fas fa-moon"></i>
+    </div>
+
     <header class="header">
         <nav class="nav">
-            <h2>PCB Studio</h2>
+            <h2>CircuitCraft Pro</h2>
             <div class="nav-links">
                 <a href="#home">Home</a>
-                <a href="#projects">Projects</a>
                 <a href="#services">Services</a>
+                <a href="#projects">Projects</a>
                 <a href="#contact">Contact</a>
             </div>
         </nav>
     </header>
 
     <section class="hero" id="home">
-        <div>
-            <h1>Professional PCB Design Solutions</h1>
-            <p>From concept to production-ready designs</p>
+        <div class="hero-content">
+            <h1>Precision PCB Design & Manufacturing</h1>
+            <p>End-to-end solutions for complex circuit board requirements</p>
+            <button class="cta-button">Start Your Project</button>
         </div>
     </section>
 
-    <section class="section" id="projects">
-        <h2>Featured Projects</h2>
-        <div class="projects-grid">
-            <!-- Project 1 -->
-            <div class="project-card">
-                <img src="https://images.unsplash.com/photo-1624996752380-8ec242e0f85d?auto=format&fit=crop&w=600" alt="IoT Board">
-                <div class="project-content">
-                    <h3>IoT Control Board</h3>
-                    <p>4-layer PCB with wireless connectivity</p>
-                    <button>View Details</button>
-                </div>
-            </div>
-            <!-- Add more project cards -->
+    <section class="features" id="services">
+        <div class="feature-card">
+            <i class="fas fa-microchip feature-icon"></i>
+            <h3>High-Density Designs</h3>
+            <p>Advanced multi-layer PCB solutions for complex applications</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-bolt feature-icon"></i>
+            <h3>Rapid Prototyping</h3>
+            <p>Quick-turn PCB fabrication with 24-hour turnaround option</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-check-double feature-icon"></i>
+            <h3>DFM Analysis</h3>
+            <p>Comprehensive design-for-manufacturing checks</p>
         </div>
     </section>
 
-    <section class="section services" id="services">
-        <h2>Our Services</h2>
-        <div class="service-grid">
-            <div class="service-item">
-                <h3>Schematic Design</h3>
-                <p>Professional circuit diagram creation</p>
+    <section class="projects-grid" id="projects">
+        <!-- Project cards with hover overlay -->
+        <div class="project-card">
+            <img src="pcb1.jpg" alt="IoT Board Design" class="project-image">
+            <div class="project-overlay">
+                <h3>Smart Home Controller</h3>
+                <p>4-layer design with wireless connectivity</p>
+                <button>View Case Study</button>
             </div>
-            <div class="service-item">
-                <h3>PCB Layout</h3>
-                <p>Optimized component placement and routing</p>
+        </div>
+        <!-- Add more project cards -->
+    </section>
+
+    <section class="testimonials">
+        <h2>Client Testimonials</h2>
+        <div class="testimonial-slider">
+            <div class="testimonial-card">
+                <p>"Outstanding attention to detail and quick turnaround times."</p>
+                <h4>- Tech Innovations Inc.</h4>
             </div>
-            <!-- Add more services -->
+            <!-- Add more testimonials -->
         </div>
     </section>
 
-    <section class="section" id="contact">
-        <h2>Contact Us</h2>
-        <form class="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="email" placeholder="Your Email" required>
-            <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
-            <button type="submit">Send Message</button>
+    <section class="contact-form" id="contact">
+        <h2>Get in Touch</h2>
+        <form action="https://formspree.io/f/your-form-id" method="POST">
+            <div class="form-group">
+                <input type="text" name="name" placeholder="Name" required>
+            </div>
+            <div class="form-group">
+                <input type="email" name="email" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <textarea name="message" placeholder="Project Details" rows="5" required></textarea>
+            </div>
+            <button type="submit">Send Inquiry</button>
         </form>
     </section>
 
     <footer>
-        <p>&copy; 2023 PCB Design Studio. All rights reserved.</p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>Email: contact@circuitcraft.com</p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
     </footer>
+
+    <script>
+        // Dark Mode Toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.querySelector('.dark-mode i');
+            icon.classList.toggle('fa-moon');
+            icon.classList.toggle('fa-sun');
+        }
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Form Submission
+        const form = document.querySelector('form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Add your form submission logic here
+            alert('Thank you for your message! We'll respond within 24 hours.');
+            form.reset();
+        });
+
+        // Scroll Animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        document.querySelectorAll('.feature-card, .project-card').forEach((el) => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(50px)';
+            observer.observe(el);
+        });
+    </script>
 </body>
 </html>
