@@ -61,7 +61,33 @@
 
       if (!isValid) {
         e.preventDefault();
-        alert(errorMessage);
+        
+        // Create or update error message display
+        let errorDiv = workRequestForm.querySelector('.form-errors');
+        if (!errorDiv) {
+          errorDiv = document.createElement('div');
+          errorDiv.className = 'form-errors';
+          errorDiv.setAttribute('role', 'alert');
+          errorDiv.setAttribute('aria-live', 'polite');
+          workRequestForm.insertBefore(errorDiv, workRequestForm.firstChild);
+        }
+        
+        errorDiv.textContent = errorMessage.trim();
+        errorDiv.style.display = 'block';
+        
+        // Scroll to error message
+        errorDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        
+        // Remove error message after showing it for a while
+        setTimeout(() => {
+          errorDiv.style.display = 'none';
+        }, 5000);
+      } else {
+        // Remove error message if form is valid
+        const errorDiv = workRequestForm.querySelector('.form-errors');
+        if (errorDiv) {
+          errorDiv.style.display = 'none';
+        }
       }
     });
 

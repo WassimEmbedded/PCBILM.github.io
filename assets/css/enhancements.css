@@ -103,11 +103,12 @@ html {
 
 /* Loading animation */
 body {
-  opacity: 0;
+  visibility: hidden;
   transition: opacity 0.5s ease-in;
 }
 
 body.loaded {
+  visibility: visible;
   opacity: 1;
 }
 
@@ -134,6 +135,30 @@ button,
 }
 
 /* Form validation styles */
+.form-errors {
+  display: none;
+  background-color: #ff4444;
+  color: #fff;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: pre-line;
+  animation: slideInDown 0.3s ease-out;
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 input:invalid:not(:placeholder-shown) {
   border-color: #ff4444 !important;
 }
