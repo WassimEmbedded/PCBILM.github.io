@@ -9,6 +9,7 @@
   <meta name="keywords" content="global, template, html, sass, jquery">
   <meta name="author" content="Bucky Maler">
   <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/calculator.css">
 </head>
 <body>
 
@@ -42,6 +43,7 @@
             <li><span>About</span></li>
             <li><span>Contact</span></li>
             <li><span>Hire us</span></li>
+            <li><span>Calculator</span></li>
           </ul>
         </nav>
         <ul class="l-main-content main-content">
@@ -259,6 +261,41 @@
               </form>
             </div>
           </li>
+          <li class="l-section section">
+            <div class="calculator-app">
+              <h2>Calculator</h2>
+              <div class="calculator">
+                <div class="calculator__display">
+                  <div class="calculator__display-previous"></div>
+                  <div class="calculator__display-current">0</div>
+                </div>
+                <div class="calculator__buttons">
+                  <button class="calculator__button calculator__button--function" data-action="clear">C</button>
+                  <button class="calculator__button calculator__button--function" data-action="delete">DEL</button>
+                  <button class="calculator__button calculator__button--operator" data-action="divide">÷</button>
+                  <button class="calculator__button calculator__button--operator" data-action="multiply">×</button>
+                  
+                  <button class="calculator__button" data-number="7">7</button>
+                  <button class="calculator__button" data-number="8">8</button>
+                  <button class="calculator__button" data-number="9">9</button>
+                  <button class="calculator__button calculator__button--operator" data-action="subtract">−</button>
+                  
+                  <button class="calculator__button" data-number="4">4</button>
+                  <button class="calculator__button" data-number="5">5</button>
+                  <button class="calculator__button" data-number="6">6</button>
+                  <button class="calculator__button calculator__button--operator" data-action="add">+</button>
+                  
+                  <button class="calculator__button" data-number="1">1</button>
+                  <button class="calculator__button" data-number="2">2</button>
+                  <button class="calculator__button" data-number="3">3</button>
+                  <button class="calculator__button calculator__button--equals" data-action="equals" style="grid-row: span 2;">=</button>
+                  
+                  <button class="calculator__button calculator__button--zero" data-number="0">0</button>
+                  <button class="calculator__button" data-action="decimal">.</button>
+                </div>
+              </div>
+            </div>
+          </li>
         </ul>
       </div>
     </div>
@@ -269,11 +306,13 @@
     <li>About</li>
     <li>Contact</li>
     <li>Hire us</li>
+    <li>Calculator</li>
   </ul>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-2.2.4.min.js"><\/script>')</script>
 <script src="assets/js/functions-min.js"></script>
+<script src="assets/js/calculator.js"></script>
 </body>
 </html>
